@@ -1,4 +1,4 @@
-import sys,os,re,xlrd
+import sys,os,xlrd
 from PyQt5.QtWidgets import QApplication,QMainWindow,QFileDialog,QAbstractItemView
 from PyQt5.QtCore import pyqtSlot,Qt
 from PyQt5.QtGui import QStandardItemModel,QStandardItem
@@ -57,7 +57,7 @@ class QmyMainWindow(QMainWindow):
 	def on_listView_clicked(self,index):
 		# print(index)
 		try:
-			self.ui.lineEdit.clear()
+			self.ui.textBrowser.clear()
 
 			self.__Signal = index.row()
 			for i in self.ui.groupBox_2.children():
@@ -66,7 +66,7 @@ class QmyMainWindow(QMainWindow):
 			item = self.item_Model.item(self.__Signal,2)#获取题目的单元格的QStandardItem对象
 			self.__Title = item.text()#
 			self.__TYPE = self.item_Model.item(self.__Signal,2).text()#题目类型的文本
-			self.ui.lineEdit.setText(self.__Title)#给文本框设置文字
+			self.ui.textBrowser.setText(self.__Title)#给文本框设置文字
 
 			Column = self.item_Model.columnCount()#获取二维列表的长度
 			for i in range(3,7):
@@ -89,7 +89,7 @@ class QmyMainWindow(QMainWindow):
 		'''
 		self.chk = QCheckBox(self.ui.groupBox_2)#在groupBox_2内实例化复选框
 		self.chk.setObjectName(checkName)#设置名称
-		self.ui.verticalLayout_2.addWidget(self.chk)#添加复选框到布局管理器内，必要的，否则无法正常显示
+		self.ui.verticalLayout.addWidget(self.chk)#添加复选框到布局管理器内，必要的，否则无法正常显示
 		self.chk.setText(checkText)#设置文本内容
 
 	def __CreateRadio(self,radioName,radioText):
@@ -101,7 +101,7 @@ class QmyMainWindow(QMainWindow):
 		'''
 		self.rab = QRadioButton(self.ui.groupBox_4)#在groupBox_2内实例化复选框
 		self.rab.setObjectName(radioName)#设置名称
-		self.ui.horizontalLayout.addWidget(self.rab)#添加复选框到布局管理器内，必要的，否则无法正常显示
+		self.ui.horizontalLayout_3.addWidget(self.rab)#添加复选框到布局管理器内，必要的，否则无法正常显示
 		self.rab.setText(radioText)#设置文本内容
 
 	@pyqtSlot()

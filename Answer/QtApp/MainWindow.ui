@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>552</height>
+    <width>1008</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>900</width>
-    <height>500</height>
+    <height>600</height>
    </size>
   </property>
   <property name="baseSize">
@@ -25,15 +25,24 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="0" column="0" rowspan="2">
      <widget class="QGroupBox" name="groupBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>430</height>
+       </size>
       </property>
       <property name="maximumSize">
        <size>
@@ -42,9 +51,9 @@
        </size>
       </property>
       <property name="title">
-       <string>标题</string>
+       <string>题号</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QListView" name="listView"/>
        </item>
@@ -52,6 +61,24 @@
      </widget>
     </item>
     <item row="0" column="1">
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="minimumSize">
+       <size>
+        <width>670</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>标题</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QTextBrowser" name="textBrowser"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="1">
      <widget class="QGroupBox" name="groupBox_2">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -62,29 +89,13 @@
       <property name="minimumSize">
        <size>
         <width>300</width>
-        <height>300</height>
+        <height>320</height>
        </size>
       </property>
       <property name="title">
-       <string>答案</string>
+       <string>选项</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLineEdit" name="lineEdit">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="dragEnabled">
-          <bool>false</bool>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QCheckBox" name="chk_A">
          <property name="text">
@@ -116,18 +127,24 @@
       </layout>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="2" column="0">
      <widget class="QGroupBox" name="groupBox_3">
+      <property name="minimumSize">
+       <size>
+        <width>190</width>
+        <height>60</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
-        <width>16777215</width>
+        <width>190</width>
         <height>60</height>
        </size>
       </property>
       <property name="title">
        <string/>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <widget class="QCheckBox" name="checkBox">
          <property name="text">
@@ -135,15 +152,18 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QListView" name="listView_2"/>
+       </item>
       </layout>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="2" column="1">
      <widget class="QGroupBox" name="groupBox_4">
       <property name="title">
-       <string/>
+       <string>类型</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QRadioButton" name="radioButton_4">
          <property name="text">
