@@ -18,6 +18,9 @@ class QmyMainWindow(QMainWindow):
 		self.BASE_PATH = os.getcwd()
 		self.itemModel = QStandardItemModel(self)
 		self.item_Model = QStandardItemModel(self)
+		self.ui.checkBox.setChecked(False)
+		self.ui.checkBox.stateChanged.connect(self.__ShowAnswer)
+
 
 		self.__CheckedFlags = Qt.Checked
 
@@ -27,7 +30,7 @@ class QmyMainWindow(QMainWindow):
 		self.excle_sheetnames = self.excle_book.sheet_names()#获取excle的sheet名称
 		self.__InitModelRaido()
 		self.__groupbox4_init()
-		self.__Excle_api(self.excle_sheetnames[0])
+		self.__Excle_api(self.excle_sheetnames[1])
 	def __Excle_api(self,sheetname):
 		self.item_list=[]
 		excle_sheet = self.excle_book.sheet_by_name(sheetname)
@@ -54,11 +57,18 @@ class QmyMainWindow(QMainWindow):
 				item_model = QStandardItem(self.item_list[i][j])
 				self.item_Model.setItem(i,j,item_model)
 		self.ui.listView.setModel(self.item_Model)
+
+	def __ShowAnswer(self,state):
+		#接收显示答案复选框的信号并显示答案
+		if state == Qt.Checked:
+
+			self.__result = self.item_Model.item(self.__Signal,7).text()
+			self.ui.label.setText(self.__result)
 	def on_listView_clicked(self,index):
 		# print(index)
 		try:
 			self.ui.textBrowser.clear()
-
+			self.ui.checkBox.setChecked(False)
 			self.__Signal = index.row()
 			for i in self.ui.groupBox_2.children():
 				if type(i) == QCheckBox:
@@ -134,6 +144,10 @@ class QmyMainWindow(QMainWindow):
 				self.__CreateRadio(radioName,radioText)  # 按照选项个数动态生成生成复选框
 			except AttributeError:
 				break
+
+	def Run_main(self):
+		self.__Excle_init()
+		self.__Excle_api(self.excle_sheetnames[1])
 
 
 	##===========窗体测试程序==========
