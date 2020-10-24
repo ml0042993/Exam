@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>images/exit.bmp</file>
+        <file>images/open.bmp</file>
+    </qresource>
+</RCC>
