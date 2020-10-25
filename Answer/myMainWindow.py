@@ -2,7 +2,7 @@ import sys,os,xlrd
 from PyQt5.QtWidgets import QApplication,QMainWindow,QFileDialog,QAbstractItemView
 from PyQt5.QtCore import pyqtSlot,Qt
 from PyQt5.QtGui import QStandardItemModel,QStandardItem
-from PyQt5.QtWidgets import QCheckBox,QRadioButton
+from PyQt5.QtWidgets import QCheckBox#,QRadioButton
 
 
 from ui_MainWindow import Ui_MainWindow
@@ -20,7 +20,9 @@ class QmyMainWindow(QMainWindow):
 		self.item_Model = QStandardItemModel(self)
 		self.ui.checkBox.setChecked(False)
 		self.ui.checkBox.stateChanged.connect(self.__ShowAnswer)
-
+		self.ui.rab_dan.clicked.connect(lambda:self.__do_setchangeType())
+		self.ui.rab_duo.clicked.connect(lambda:self.__do_setchangeType())
+		self.ui.rab_pan.clicked.connect(lambda:self.__do_setchangeType())
 
 		self.__CheckedFlags = Qt.Checked
 
@@ -29,8 +31,8 @@ class QmyMainWindow(QMainWindow):
 		self.excle_book = xlrd.open_workbook(self.Open_File_path)
 		self.excle_sheetnames = self.excle_book.sheet_names()#获取excle的sheet名称
 		self.__InitModelRaido()
-		self.__groupbox4_init()
-		self.__Excle_api(self.excle_sheetnames[1])
+		# self.__groupbox4_init()
+
 	def __Excle_api(self,sheetname):
 		self.item_list=[]
 		excle_sheet = self.excle_book.sheet_by_name(sheetname)
@@ -41,7 +43,7 @@ class QmyMainWindow(QMainWindow):
 			original_table[0] = "第" + str(original_table[0]) + "题"
 			original_table = [str(j) for j in original_table]
 			self.item_list.append(original_table)
-		print(self.item_list)
+		# print(self.item_list)
 		self.__InitModelExcle()
 	def __InitModelRaido(self):
 		Count_Row = len(self.excle_sheetnames)
@@ -83,7 +85,7 @@ class QmyMainWindow(QMainWindow):
 				item = self.item_Model.item(self.__Signal,i)#遍历二级列表内的元素
 				try:
 					anchor = item.text()
-					print(anchor)
+					# print(anchor)
 					checkName = "chk_{}_{}".format(self.__Signal,i)
 					self.__CreateChecked(checkName,anchor)#按照选项个数动态生成生成复选框
 				except AttributeError:
@@ -102,17 +104,17 @@ class QmyMainWindow(QMainWindow):
 		self.ui.verticalLayout.addWidget(self.chk)#添加复选框到布局管理器内，必要的，否则无法正常显示
 		self.chk.setText(checkText)#设置文本内容
 
-	def __CreateRadio(self,radioName,radioText):
-		'''
-		创建单选框
-		:param checkName: 复选框的objectName
-		:param checkText: 复选框的文本内容
-		:return:
-		'''
-		self.rab = QRadioButton(self.ui.groupBox_4)#在groupBox_2内实例化复选框
-		self.rab.setObjectName(radioName)#设置名称
-		self.ui.horizontalLayout_3.addWidget(self.rab)#添加复选框到布局管理器内，必要的，否则无法正常显示
-		self.rab.setText(radioText)#设置文本内容
+	# def __CreateRadio(self,radioName,radioText):
+	# 	'''
+	# 	创建单选框
+	# 	:param checkName: 复选框的objectName
+	# 	:param checkText: 复选框的文本内容
+	# 	:return:
+	# 	'''
+	# 	self.rab = QRadioButton(self.ui.groupBox_4)#在groupBox_2内实例化复选框
+	# 	self.rab.setObjectName(radioName)#设置名称
+	# 	self.ui.horizontalLayout_3.addWidget(self.rab)#添加复选框到布局管理器内，必要的，否则无法正常显示
+	# 	self.rab.setText(radioText)#设置文本内容
 
 	@pyqtSlot()
 	def on_actOpen_File_triggered(self):
@@ -129,25 +131,33 @@ class QmyMainWindow(QMainWindow):
 		# print(self.Open_File_path)
 		self.__Excle_init()
 	##=========自定义槽函数============
-	def __groupbox4_init(self):
-		for i in self.ui.groupBox_4.children():
-			if type(i) == QRadioButton:
-				i.deleteLater()  # 删除checkBox组件
-		Column = self.itemModel.columnCount()  # 获取二维列表的长度
+	# def __groupbox4_init(self):
+	# 	#动态生成题目类型,即sheet页对应的题目类型
+	# 	for i in self.ui.groupBox_4.children():
+	# 		if type(i) == QRadioButton:
+	# 			i.deleteLater()  # 删除checkBox组件
+	# 	Column = self.itemModel.columnCount()  # 获取二维列表的长度
+	#
+	# 	for i in range(Column):
+	# 		item = self.itemModel.item(0, i)  # 遍历二级列表内的元素
+	#
+	# 		try:
+	# 			radioText = item.text()
+	# 			radioName = "rad_{}_{}".format(0, i)
+	# 			self.__CreateRadio(radioName,radioText)  # 按照选项个数动态生成生成复选框
+	# 		except AttributeError:
+	# 			break
 
-		for i in range(Column):
-			item = self.itemModel.item(0, i)  # 遍历二级列表内的元素
-
-			try:
-				radioText = item.text()
-				radioName = "rad_{}_{}".format(0, i)
-				self.__CreateRadio(radioName,radioText)  # 按照选项个数动态生成生成复选框
-			except AttributeError:
-				break
-
-	def Run_main(self):
-		self.__Excle_init()
-		self.__Excle_api(self.excle_sheetnames[1])
+	def __do_setchangeType(self):
+		if self.ui.rab_dan.isChecked():
+			self.__Excle_api(self.excle_sheetnames[0])
+			print("1")
+		elif self.ui.rab_duo.isChecked():
+			self.__Excle_api(self.excle_sheetnames[1])
+			print("2")
+		elif self.ui.rab_pan.isChecked():
+			self.__Excle_api(self.excle_sheetnames[2])
+			print("3")
 
 
 	##===========窗体测试程序==========
